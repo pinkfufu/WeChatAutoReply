@@ -1,0 +1,53 @@
+server:
+  port: 8080
+spring:
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:mysql://localhost:3306/xiaozhi?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 123456
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/memory_db
+mybatis-plus:
+  type-aliases-package: com.atguigu.java.ai.langchain4j.domain.po                               # 实体类包扫描路径
+  mapper-locations: "classpath*:/mapper/**/*.xml"                                               # Mapper.xml文件地址，当前这个是默认值。
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    default-enum-type-handler: com.baomidou.mybatisplus.core.handlers.MybatisEnumTypeHandler    # 全局枚举类型处理器
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+  global-config:
+    db-config:
+      id-type: auto                                                 # 全局id类型为自增长
+      logic-delete-field: deleted                                   # 逻辑删除字段,字段可以是任意的,Boolean类型或者Integer类型
+      logic-delete-value: 1                                         # 逻辑删除值
+      logic-not-delete-value: 0                                     # 逻辑未删除值
+      update-strategy: not_null                                     # 全局更新策略为非null字段更新
+logging:
+  level:
+    com.guigu: debug
+  pattern:
+    dateformat: HH:mm:ss
+langchain4j:
+  open-ai:
+    chat-model:
+      base-url: https://dashscope.aliyuncs.com/compatible-mode/v1
+      api-key: sk-0a9c06e9f603473086bf467a72438185
+      model-name: qwen3.6-plus
+      log-requests: true                                           # 是否打印请求,需要系统配置日志级别为debug
+      log-responses: true
+  community:                                                        # 集成阿里百炼
+    dashscope:
+      chat-model:
+        base-url: https://dashscope.aliyuncs.com/api/v1
+        api-key: sk-0a9c06e9f603473086bf467a72438185
+        model-name: deepseek-v4-flash
+        temperature: 0.5
+      streaming-chat-model:
+        api-key: sk-0a9c06e9f603473086bf467a72438185
+        model-name: deepseek-v4-flash
+      embedding-model:
+        api-key: sk-0a9c06e9f603473086bf467a72438185
+        model-name: text-embedding-v4
